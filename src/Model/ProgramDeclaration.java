@@ -4,7 +4,6 @@ import Controller.Controller;
 import java.io.IOException;
 
 /**
- *
  * @author 
  * Sukamto 23518017
  * Andreas Novian 23518002
@@ -18,21 +17,21 @@ public class ProgramDeclaration {
     
     public void procedureA() throws IOException{
         procedureB();
-        this.controller.accept('.');
+        this.controller.accept(".");
     }
     
     public void procedureB() throws IOException{
-        char symbol = this.controller.getSymbol();
+        String symbol = this.controller.getSymbol();
         switch(symbol){
-            case ('x'):this.controller.accept('x');
+            case ("x"):this.controller.accept("x");
                 break;
-            case '(':this.controller.accept('(');
+            case "(":this.controller.accept("(");
                 procedureC();
-                this.controller.accept(')');
+                this.controller.accept(")");
                 break;
-            case '[':this.controller.accept('[');
+            case "[":this.controller.accept("[");
                 procedureB();
-                this.controller.accept(']');
+                this.controller.accept("]");
                 break;
         }
     }
@@ -43,9 +42,9 @@ public class ProgramDeclaration {
     }
     
     public void procedureD() throws IOException{
-        char symbol = this.controller.getSymbol();
-        while(symbol == '+'){
-            this.controller.accept('+');
+        String symbol = this.controller.getSymbol();
+        while(symbol.equalsIgnoreCase("+")){
+            this.controller.accept("+");
             symbol = this.controller.getSymbol();
             procedureB();
         }
