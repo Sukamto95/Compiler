@@ -5,7 +5,9 @@ import java.io.IOException;
 
 /**
  *
- * @author sukam, andre
+ * @author 
+ * Sukamto 23518017
+ * Andreas Novian 23518002
  */
 public class ProgramDeclaration {
     Controller controller;
@@ -22,7 +24,7 @@ public class ProgramDeclaration {
     public void procedureB() throws IOException{
         char symbol = this.controller.getSymbol();
         switch(symbol){
-            case 'x':this.controller.accept('x');
+            case ('x'):this.controller.accept('x');
                 break;
             case '(':this.controller.accept('(');
                 procedureC();
@@ -48,4 +50,39 @@ public class ProgramDeclaration {
             procedureB();
         }
     }
+    
+    //Program Declaration
+    
+    
+    //Class
+    
+    
+    //Interface
+    
+    
+    //Constructor
+    
+    
+    //Field
+    
+    
+    //Method
+    
+    
+    //Data Type
+    
+    
+    //Statement
+    
+    
+    //Branching
+    
+    
+    //Looping
+    
+    
+    //Expression
+    
+    
+    //Literal
 }

@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.ProgramDeclaration;
-import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +11,9 @@ import java.io.IOException;
 
 /**
  *
- * @author sukam, andre
+ * @author 
+ * Sukamto 23518017
+ * Andreas Novian 23518002
  */
 public class Controller {
     
@@ -37,9 +38,13 @@ public class Controller {
         symbol = isiFile.charAt(cursor);
         new ProgramDeclaration(this).procedureA();
         if(cursor < isiFile.length()-2){
+            if(!isError){
+                bw.write("(Error)");
+            }
+            bw.write(isiFile.substring(cursor));
             isError = true;
-            bw.write("(Error)"+isiFile.substring(cursor));
-        } else if(!isError){
+        }
+        if(!isError){
             bw.write("\nTidak ada error\n");
         }
         bw.close();
