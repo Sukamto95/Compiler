@@ -110,7 +110,6 @@ public class Controller {
     private String[] preprocess(String isiFile) throws IOException {
         String temp = "";
         String lastKnown = "";
-//        boolean inserted = false; //untuk tahu pernah dimasukkin ke simbol atau belum
         char c;
 
         isiFile = isiFile.replaceAll("\\s+", "");
@@ -120,23 +119,26 @@ public class Controller {
             c = isiFile.charAt(i);
             temp += c;
 
-            if (isReservedWord(lastKnown + temp)) {
-                for (int j=0;j<lastKnown.length();j++){
-                    result.remove(""+lastKnown.charAt(j));
-                }
-                result.add(lastKnown + temp);
-                lastKnown = "";
-                temp = "";
-            } else if (isCharacters(lastKnown + temp)) {
-                for (int j=0;j<lastKnown.length();j++){
-                    result.remove(""+lastKnown.charAt(j));
+            if (isReservedWord(lastKnown + temp) || isCharacters(lastKnown + temp)) {
+                for (int j = 0; j < lastKnown.length(); j++) {
+                    result.remove("" + lastKnown.charAt(j));
                 }
                 result.add(lastKnown + temp);
                 lastKnown = "";
                 temp = "";
             } else {
                 result.add(temp);
-                lastKnown += temp;
+                if (!lastKnown.equalsIgnoreCase("")) {
+                    if (isCharacters(temp) && isCharacters("" + lastKnown.charAt(lastKnown.length() - 1))) {
+                        lastKnown += temp;
+                    } else if (isAlphanumeric(temp) && isAlphanumeric("" + lastKnown.charAt(lastKnown.length() - 1))) {
+                        lastKnown += temp;
+                    } else {
+                        lastKnown = temp;
+                    }
+                } else {
+                    lastKnown = temp;
+                }
                 temp = "";
             }
         }
