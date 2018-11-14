@@ -8,23 +8,50 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sukamto 23518017 Andreas Novian 23518002
  */
 public class Controller {
 
-    BufferedReader br, brSymbol;
+    List<String> listReservedWord, listAlphanumeric, listCharacters;
+    BufferedReader br;
     BufferedWriter bw;
     String isiFile = ""; //isi file murni, belum diapa-apain
     String[] listOfSymbols; //kumpulan simbol setelah dipisahin
     String symbol; //simbol yang sedang diproses
-    int cursor;
+    int cursor; //penunjuk simbol yang sedang dicek
     boolean isError = false;
 
-    public Controller() throws FileNotFoundException {
+    public Controller() throws FileNotFoundException, IOException {
+        initList();
         br = new BufferedReader(new FileReader("input.txt"));
-        brSymbol = new BufferedReader(new FileReader("symbols.txt"));
+    }
+
+    private void initList() throws FileNotFoundException, IOException {
+        //simpan isi file reservedWord ke list
+        br = new BufferedReader(new FileReader("reservedWord.txt"));
+        listReservedWord = new ArrayList<>();
+        String currentLine;
+        while ((currentLine = br.readLine()) != null) {
+            listReservedWord.add(currentLine);
+        }
+
+        //simpan isi file alphanumeric ke list
+        br = new BufferedReader(new FileReader("alphanumeric.txt"));
+        listAlphanumeric = new ArrayList<>();
+        while ((currentLine = br.readLine()) != null) {
+            listAlphanumeric.add(currentLine);
+        }
+
+        //simpan isi file characters ke list
+        br = new BufferedReader(new FileReader("characters.txt"));
+        listCharacters = new ArrayList<>();
+        while ((currentLine = br.readLine()) != null) {
+            listCharacters.add(currentLine);
+        }
     }
 
     public void start() throws IOException {
@@ -35,6 +62,7 @@ public class Controller {
         while ((currentLine = br.readLine()) != null) {
             isiFile += currentLine + "\n";
         }
+        br.close();
 
         listOfSymbols = preprocess(isiFile);
         symbol = listOfSymbols[0];
@@ -68,7 +96,7 @@ public class Controller {
         }
     }
 
-    public void readNextSymbol() {
+    private void readNextSymbol() {
         cursor++;
         if (cursor < listOfSymbols.length) {
             this.symbol = listOfSymbols[cursor];
@@ -79,41 +107,71 @@ public class Controller {
         return this.symbol;
     }
 
-    public String[] preprocess(String isiFile) throws IOException {
-        int counter = 0;
+    private String[] preprocess(String isiFile) throws IOException {
         String temp = "";
+        String lastKnown = "";
+//        boolean inserted = false; //untuk tahu pernah dimasukkin ke simbol atau belum
         char c;
 
         isiFile = isiFile.replaceAll("\\s+", "");
-        String[] result = new String[isiFile.length()];
+        List<String> result = new ArrayList<>();
 
         for (int i = 0; i < isiFile.length(); i++) {
             c = isiFile.charAt(i);
-            if (Character.isLetter(c)) {
-                temp += c;
-            }
-            if (isSymbol(temp)) {
-                result[counter] = temp;
+            temp += c;
+
+            if (isReservedWord(lastKnown + temp)) {
+                for (int j=0;j<lastKnown.length();j++){
+                    result.remove(""+lastKnown.charAt(j));
+                }
+                result.add(lastKnown + temp);
+                lastKnown = "";
                 temp = "";
-                counter++;
+            } else if (isCharacters(lastKnown + temp)) {
+                for (int j=0;j<lastKnown.length();j++){
+                    result.remove(""+lastKnown.charAt(j));
+                }
+                result.add(lastKnown + temp);
+                lastKnown = "";
+                temp = "";
             } else {
-                result[counter] = c + "";
-                counter++;
+                result.add(temp);
+                lastKnown += temp;
+                temp = "";
             }
         }
 
-        return result;
+        String[] arrResult = new String[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            arrResult[i] = result.get(i);
+        }
+        return arrResult;
     }
 
-    public boolean isSymbol(String in) throws IOException {
-        String currentLine;
-
-        while ((currentLine = brSymbol.readLine()) != null) {
-            if (in.equalsIgnoreCase(currentLine)) {
+    private boolean isReservedWord(String in) {
+        for (String currentLine : listReservedWord) {
+            if (currentLine.equalsIgnoreCase(in)) {
                 return true;
             }
         }
+        return false;
+    }
 
+    private boolean isAlphanumeric(String in) {
+        for (String currentLine : listAlphanumeric) {
+            if (currentLine.equalsIgnoreCase(in)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isCharacters(String in) {
+        for (String currentLine : listCharacters) {
+            if (currentLine.equalsIgnoreCase(in)) {
+                return true;
+            }
+        }
         return false;
     }
 }
