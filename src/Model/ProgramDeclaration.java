@@ -9,29 +9,28 @@ import java.io.IOException;
  * Andreas Novian 23518002
  */
 public class ProgramDeclaration {
-    Controller controller;
+    Controller cnt;
     
     public ProgramDeclaration(Controller cont){
-        this.controller = cont;
+        this.cnt = cont;
     }
     
     public void procedureA() throws IOException{
         procedureB();
-        this.controller.accept(".");
+        this.cnt.accept(".");
     }
     
     public void procedureB() throws IOException{
-        String symbol = this.controller.getSymbol();
-        switch(symbol){
-            case ("x"):this.controller.accept("x");
+        switch(cnt.symbol){
+            case ("x"):this.cnt.accept("x");
                 break;
-            case "(":this.controller.accept("(");
+            case "(":this.cnt.accept("(");
                 procedureC();
-                this.controller.accept(")");
+                this.cnt.accept(")");
                 break;
-            case "[":this.controller.accept("[");
+            case "[":this.cnt.accept("[");
                 procedureB();
-                this.controller.accept("]");
+                this.cnt.accept("]");
                 break;
         }
     }
@@ -42,10 +41,10 @@ public class ProgramDeclaration {
     }
     
     public void procedureD() throws IOException{
-        String symbol = this.controller.getSymbol();
-        while(symbol.equalsIgnoreCase("+")){
-            this.controller.accept("+");
-            symbol = this.controller.getSymbol();
+        String symbol = cnt.getSymbol();
+        while(symbol.equals("+")){
+            cnt.accept("+");
+            symbol = cnt.getSymbol();
             procedureB();
         }
     }

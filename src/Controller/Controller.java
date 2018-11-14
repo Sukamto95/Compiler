@@ -21,7 +21,7 @@ public class Controller {
     BufferedWriter bw;
     String isiFile = ""; //isi file murni, belum diapa-apain
     String[] listOfSymbols; //kumpulan simbol setelah dipisahin
-    String symbol; //simbol yang sedang diproses
+    public String symbol; //simbol yang sedang diproses
     int cursor; //penunjuk simbol yang sedang dicek
     boolean isError = false;
 
@@ -68,10 +68,11 @@ public class Controller {
         symbol = listOfSymbols[0];
 
         new ProgramDeclaration(this).procedureA();
-        if (cursor < listOfSymbols.length - 2) {
-            if (!isError) {
-                bw.write("(Error)");
-            }
+        
+        //cek apakah masih ada sisa input setelah program berakhir
+        //jika ada, tampilkan error dan print seluruh sisa file
+        if (cursor < listOfSymbols.length) {
+            bw.write("(Error)");
             for (int i = cursor; i < listOfSymbols.length; i++) {
                 bw.write(listOfSymbols[i]);
             }
@@ -85,13 +86,25 @@ public class Controller {
     }
 
     public void accept(String terminal) throws IOException {
-        System.out.println("terminal - symbol = " + terminal + " - " + symbol);
-        if (terminal.equalsIgnoreCase(symbol)) {
-            bw.write(symbol);
-            readNextSymbol();
-        } else {
-            isError = true;
-            bw.write("(Error)" + symbol);
+        boolean isAccepted = false;
+        //akan di readNextSymbol terus selama belum di accept
+        //agar tidak mengacaukan sisa file yang tidak error
+        //misalnya: input = (x+x+).
+        //input yang bisa diterima adalah (x+x).
+        //maka outputnya adalah: (x+x(Error)+).  sisa file ). tidak error
+        while(!isAccepted){
+            System.out.println("terminal - symbol = " + terminal + " - " + symbol);
+            if(cursor >= listOfSymbols.length){
+                isAccepted = true;
+            } else{
+                if (terminal.equals(symbol)) {
+                    isAccepted = true;
+                    bw.write(symbol);
+                } else {
+                    isError = true;
+                    bw.write("(Error)" + symbol);
+                }
+            }
             readNextSymbol();
         }
     }
@@ -121,7 +134,8 @@ public class Controller {
 
             if (isReservedWord(lastKnown + temp) || isCharacters(lastKnown + temp)) {
                 for (int j = 0; j < lastKnown.length(); j++) {
-                    result.remove("" + lastKnown.charAt(j));
+                    //result.remove("" + lastKnown.charAt(j));
+                    result.remove(result.size()-1);
                 }
                 result.add(lastKnown + temp);
                 lastKnown = "";
