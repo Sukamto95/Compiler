@@ -41,10 +41,8 @@ public class ProgramDeclaration {
     }
     
     public void procedureD() throws IOException{
-        String symbol = cnt.getSymbol();
-        while(symbol.equals("+")){
+        while(cnt.symbol.equals("+")){
             cnt.accept("+");
-            symbol = cnt.getSymbol();
             procedureB();
         }
     }

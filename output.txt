@@ -1,1 +1,2 @@
-(Error)a(Error)++(Error);(Error)}(Error)public
+(x+[x]+x+x).
+Tidak ada error
