@@ -71,7 +71,7 @@ public class Controller {
         }
         br.close();
 
-        listOfSymbols = preprocess(isiFile);
+        listOfSymbols = parseSymbols(isiFile);
         symbol = listOfSymbols[0];
 
         new ProgramDeclaration(this).procedureA();
@@ -127,17 +127,15 @@ public class Controller {
         return this.symbol;
     }
 
-    private String[] preprocess(String isiFile) throws IOException {
-        String temp = "";
+    private String[] parseSymbols(String isiFile) throws IOException {
+        String temp;
         String lastKnown = "";
-        char c;
 
         isiFile = isiFile.replaceAll("\\s+", "");
         List<String> result = new ArrayList<>();
 
         for (int i = 0; i < isiFile.length(); i++) {
-            c = isiFile.charAt(i);
-            temp += c;
+            temp = isiFile.charAt(i)+"";
 
             if (isReservedWord(lastKnown + temp) || isMultiCharacters(lastKnown + temp)) {
                 for (int j = 0; j < lastKnown.length(); j++) {
@@ -146,7 +144,9 @@ public class Controller {
                 }
                 result.add(lastKnown + temp);
                 lastKnown = "";
-                temp = "";
+            } else if (result.size() > 0 && isMultiCharacters(result.get(result.size() - 1) + temp)) {
+                result.add(result.remove(result.size() - 1) + temp);
+                lastKnown = "";
             } else {
                 result.add(temp);
                 if (lastKnown.equalsIgnoreCase("")) {
@@ -160,7 +160,6 @@ public class Controller {
                         lastKnown = temp;
                     }
                 }
-                temp = "";
             }
         }
 
