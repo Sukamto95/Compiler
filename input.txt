@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-(x+[x]+x+x).
 =======
 ,if(true)publicstaticvoid main
 <<=
@@ -10,4 +8,12 @@
 >>>
 >=
 >>
->>>>>>> origin/master
+,if(true)publicstaticvoid main
+<<=
+<=
+<<
+>>>=
+>>=
+>>>
+>=
+>>
