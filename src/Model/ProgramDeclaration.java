@@ -441,7 +441,7 @@ public class ProgramDeclaration {
         identifier();
     }
     
-    public void throws1() throws IOException
+    public void throws1() throws IOException{
         if(cnt.symbol.equals("throws")){
             this.cnt.accept("throws");
             identifier();
