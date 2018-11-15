@@ -44,7 +44,42 @@ declaration type
 constant declaration
 public, static, final
 
+block statement
+data primitive, identifier, statement without expression statement, expression statement without identifier
 
+statement without expression statement
+{, ; , switch, do, break, continue, return, synchronized, throws, try, if, while, for
+
+expression statement without identifier, statement expr
+new, ++ , -- , assignment
+
+assignment
+super, this
+
+this ( <argument list> ) ;
+super ( <argument list> ) ;
+
+<assignment operator> <expression>
+super. <identifier> {. <identifier>} <array access>
+this. <identifier> {. <identifier>} <array access>
+
+
+variable initializers, expression, additive expression, shift expression, relational expression, equality expression,
+and expression, exclusive or, inclusive or, conditional and, conditional or, unary expression
+First --> identifier, -- , ++ , primary, ( , + , - , ~
+
+primary
+literal, new, super, this
+
+literal
+0 - 9 (ascii 48-57), true, false, ' (ascii 34), " (Ascii 39), null
+
+
+
+
+
+catatan:
+explicit constructor invocation tidak dipakai
 static method declaration
 data primitive b, identifier a
 a

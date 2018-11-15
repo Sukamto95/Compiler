@@ -454,12 +454,266 @@ public class ProgramDeclaration {
     
     public void constructorBody() throws IOException{
         this.cnt.accept("{");
-        
+        while(cnt.symbol.equals("this") || cnt.symbol.equals("super") || cnt.symbol.equals("new")
+                || cnt.symbol.equals("++") || cnt.symbol.equals("--") || cnt.symbol.equals("{")
+                || cnt.symbol.equals(";") || cnt.symbol.equals("switch") || cnt.symbol.equals("do")
+                || cnt.symbol.equals("break") || cnt.symbol.equals("continue") || cnt.symbol.equals("return")
+                || cnt.symbol.equals("synchronized") || cnt.symbol.equals("throws") || cnt.symbol.equals("try")
+                || cnt.symbol.equals("if") || cnt.symbol.equals("while") || cnt.symbol.equals("for")
+                || cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double") 
+                || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int") 
+                || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_") 
+                || ((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)){
+            blockStatement();
+        }
         this.cnt.accept("}");
     }
     
-    //Field
+    public void explicitConstructorInvocation() throws IOException{
+        switch(cnt.symbol){
+            case ("this"):
+                this.cnt.accept("this");
+                this.cnt.accept("(");
+                argumentList();
+                this.cnt.accept(")");
+                this.cnt.accept(";");
+                break;
+            case("super"):
+                this.cnt.accept("super");
+                this.cnt.accept("(");
+                argumentList();
+                this.cnt.accept(")");
+                this.cnt.accept(";");
+                break;
+        }
+    }
     
+    //Field
+    public void fieldDeclaration() throws IOException{
+        fieldAdditionalModifiers();
+        dataType();
+        variableDeclarators();
+        this.cnt.accept(";");
+    }
+    
+    public void staticFieldDeclaration() throws IOException{
+        fieldModifier2Initializer();
+        dataType();
+        variableDeclarators();
+        this.cnt.accept(";");
+    }
+    
+    public void fieldModifier2() throws IOException{
+        this.cnt.accept("transient");
+    }
+    
+    public void fieldModifier3() throws IOException{
+        this.cnt.accept("volatile");
+    }
+    
+    public void staticModifier() throws IOException{
+        this.cnt.accept("static");
+    }
+    
+    public void fieldAdditionalModifiers() throws IOException{
+        switch(cnt.symbol){
+            case ("transient"):
+                fieldModifier2();
+                staticModifierInitializer();
+                break;
+            case ("volatile"):
+                fieldModifier3();
+                fieldModifier3Declaration();
+                break;
+        }
+    }
+    
+    public void staticModifierInitializer() throws IOException{
+        switch(cnt.symbol){
+            case ("volatile"):
+                fieldModifier3();
+                staticModifier();
+                break;
+            case ("static"):
+                staticModifier();
+                fieldModifier3Initializer();
+                break;
+        }
+    }
+    
+    public void fieldModifier2Initializer() throws IOException{
+        switch(cnt.symbol){
+            case ("volatile"):
+                fieldModifier3();
+                fieldModifier2();
+                break;
+            case ("transient"):
+                fieldModifier2();
+                fieldModifier3Initializer();
+                break;
+        }
+    }
+    
+    public void fieldModifier3Initializer() throws IOException{
+        if(cnt.symbol.equals("volatile")){
+            fieldModifier3();
+        }
+    }
+    
+    public void fieldModifier3Declaration() throws IOException{
+        fieldModifier2();
+        staticModifier();
+    }
+    
+    public void variableOrMethodOption() throws IOException{
+        if(cnt.symbol.equals("(")){
+            parameters();
+            throws1();
+        } else if(cnt.symbol.equals("[") || cnt.symbol.equals("=")){
+            variableOption();
+            variableLooping();
+            this.cnt.accept(";");
+        }
+    }
+    
+    public void variableDeclarators() throws IOException{
+        variableDeclarator();
+        while(cnt.symbol.equals(",")){
+            this.cnt.accept(",");
+            variableDeclarator();
+        }
+    }
+    
+    public void variableDeclarator() throws IOException{
+        if(cnt.symbol.equals("_") || ((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)){
+            identifier();
+            variableOption();
+        } else if(cnt.symbol.equals("[")){
+            arrayAfterDataType();
+        }
+    }
+    
+    public void arrayAfterDataType() throws IOException{
+        this.cnt.accept("[");
+        this.cnt.accept("]");
+        while(cnt.symbol.equals("[")){
+            this.cnt.accept("[");
+            this.cnt.accept("]");
+        }
+        arrayDeclaration();
+    }
+    
+    public void arrayDeclaration() throws IOException{
+        if(cnt.symbol.equals("_") || ((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)){
+            identifier();
+            arrayInitializer();
+        }
+    }
+    
+    public void variableOption() throws IOException{
+        switch(cnt.symbol){
+            case ("="):
+                variableOperator();
+                break;
+            case ("["):
+                this.cnt.accept("[");
+                this.cnt.accept("]");
+                while(cnt.symbol.equals("[")){
+                    this.cnt.accept("[");
+                    this.cnt.accept("]");
+                }
+                arrayInitializer();
+                break;
+        }
+    }
+    
+    public void variableOperator() throws IOException{
+        if(cnt.symbol.equals("=")){
+            this.cnt.accept("=");
+            variableInitializer();
+        }
+    }
+    
+    public void variableInitializers() throws IOException{
+        if(cnt.symbol.equals("_") || ((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122) || cnt.symbol.equals("--")
+                || cnt.symbol.equals("++") || cnt.symbol.equals("(") || cnt.symbol.equals("+")
+                || cnt.symbol.equals("-") || cnt.symbol.equals("~") || cnt.symbol.equals("new")
+                || cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("true")
+                || cnt.symbol.equals("false") || cnt.symbol.equals("null") || (int)cnt.symbol.charAt(0)==34
+                || (int)cnt.symbol.charAt(0)==39 || ((int)cnt.symbol.charAt(0)>=48 && (int)cnt.symbol.charAt(0)<=57)){
+            variableInitializer();
+            while(cnt.symbol.equals(",")){
+                this.cnt.accept(",");
+                variableInitializer();
+            }
+        }
+    }
+    
+    public void variableInitializer() throws IOException{
+        expression();
+    }
+    
+    public void variableLooping() throws IOException{
+        while(cnt.symbol.equals(",")){
+            this.cnt.accept(",");
+            identifier();
+            variableOption();
+        }
+    }
+    
+    public void arrayInitializer() throws IOException{
+        this.cnt.accept("=");
+        this.cnt.accept("{");
+        arrayTypeInitializer();
+        this.cnt.accept("}");
+    }
+    
+    public void arrayTypeInitializer() throws IOException{
+        if(cnt.symbol.equals("_") || ((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122) || cnt.symbol.equals("--")
+                || cnt.symbol.equals("++") || cnt.symbol.equals("(") || cnt.symbol.equals("+")
+                || cnt.symbol.equals("-") || cnt.symbol.equals("~") || cnt.symbol.equals("new")
+                || cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("true")
+                || cnt.symbol.equals("false") || cnt.symbol.equals("null") || (int)cnt.symbol.charAt(0)==34
+                || (int)cnt.symbol.charAt(0)==39 || ((int)cnt.symbol.charAt(0)>=48 && (int)cnt.symbol.charAt(0)<=57)){
+            variableInitializers();
+        } else if(cnt.symbol.equals("{")){
+            this.cnt.accept("{");
+            variableInitializers();
+            this.cnt.accept("}");
+            while(cnt.symbol.equals(",")){
+                this.cnt.accept(",");
+                this.cnt.accept("{");
+                variableInitializers();
+                this.cnt.accept("}");
+            }
+        }
+    }
+    
+    public void constantDeclaration() throws IOException{
+        constantModifiers();
+        dataType();
+        variableDeclarator();
+        this.cnt.accept(";");
+    }
+    
+    public void constantModifiers() throws IOException{
+        switch(cnt.symbol){
+            case ("public"):
+                this.cnt.accept("public");
+                break;
+            case ("static"):
+                this.cnt.accept("static");
+                break;
+            case ("final"):
+                this.cnt.accept("final");
+                break;
+        }
+    }
     
     //Method
     
@@ -480,4 +734,121 @@ public class ProgramDeclaration {
     
     
     //Literal
+    public void identifier() throws IOException{
+        if(((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)){
+            alphabet();
+            while(((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)
+                    || ((int)cnt.symbol.charAt(0)>=48 && (int)cnt.symbol.charAt(0)<=57)
+                    || cnt.symbol.equals("_")){
+                while(((int)cnt.symbol.charAt(0)>=48 && (int)cnt.symbol.charAt(0)<=57)){
+                    digit();
+                }
+                while(((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                    || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)){
+                    alphabet();
+                }
+                while(cnt.symbol.equals("_")){
+                    this.cnt.accept("_");
+                }
+            }
+        } else if(cnt.symbol.equals("_")){
+            this.cnt.accept("_");
+            while(((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)
+                    || ((int)cnt.symbol.charAt(0)>=48 && (int)cnt.symbol.charAt(0)<=57)
+                    || cnt.symbol.equals("_")){
+                while(((int)cnt.symbol.charAt(0)>=48 && (int)cnt.symbol.charAt(0)<=57)){
+                    digit();
+                }
+                while(((int)cnt.symbol.charAt(0)>=65 && (int)cnt.symbol.charAt(0)<=90)
+                    || ((int)cnt.symbol.charAt(0)>=97 && (int)cnt.symbol.charAt(0)<=122)){
+                    alphabet();
+                }
+                while(cnt.symbol.equals("_")){
+                    this.cnt.accept("_");
+                }
+            }
+        }
+    }
+    
+    public void digit() throws IOException{
+        if(cnt.symbol.equals("0")){
+            this.cnt.accept("0");
+        } else if((int)cnt.symbol.charAt(0)>=49 && (int)cnt.symbol.charAt(0)<=57){
+            nonZeroDigit();
+        }
+    }
+    
+    public void nonZeroDigit() throws IOException{
+        switch(cnt.symbol){
+            case "1":this.cnt.accept("1");break;
+            case "2":this.cnt.accept("2");break;
+            case "3":this.cnt.accept("3");break;
+            case "4":this.cnt.accept("4");break;
+            case "5":this.cnt.accept("5");break;
+            case "6":this.cnt.accept("6");break;
+            case "7":this.cnt.accept("7");break;
+            case "8":this.cnt.accept("8");break;
+            case "9":this.cnt.accept("9");break;
+        }
+    }
+    
+    public void alphabet() throws IOException{
+        switch(cnt.symbol){
+            case "A":this.cnt.accept("A");break;
+            case "B":this.cnt.accept("B");break;
+            case "C":this.cnt.accept("C");break;
+            case "D":this.cnt.accept("D");break;
+            case "E":this.cnt.accept("E");break;
+            case "F":this.cnt.accept("F");break;
+            case "G":this.cnt.accept("G");break;
+            case "H":this.cnt.accept("H");break;
+            case "I":this.cnt.accept("I");break;
+            case "J":this.cnt.accept("J");break;
+            case "K":this.cnt.accept("K");break;
+            case "L":this.cnt.accept("L");break;
+            case "M":this.cnt.accept("M");break;
+            case "N":this.cnt.accept("N");break;
+            case "O":this.cnt.accept("O");break;
+            case "P":this.cnt.accept("P");break;
+            case "Q":this.cnt.accept("Q");break;
+            case "R":this.cnt.accept("R");break;
+            case "S":this.cnt.accept("S");break;
+            case "T":this.cnt.accept("T");break;
+            case "U":this.cnt.accept("U");break;
+            case "V":this.cnt.accept("V");break;
+            case "W":this.cnt.accept("W");break;
+            case "X":this.cnt.accept("X");break;
+            case "Y":this.cnt.accept("Y");break;
+            case "Z":this.cnt.accept("Z");break;
+            case "a":this.cnt.accept("a");break;
+            case "b":this.cnt.accept("b");break;
+            case "c":this.cnt.accept("c");break;
+            case "d":this.cnt.accept("d");break;
+            case "e":this.cnt.accept("e");break;
+            case "f":this.cnt.accept("f");break;
+            case "g":this.cnt.accept("g");break;
+            case "h":this.cnt.accept("h");break;
+            case "i":this.cnt.accept("i");break;
+            case "j":this.cnt.accept("j");break;
+            case "k":this.cnt.accept("k");break;
+            case "l":this.cnt.accept("l");break;
+            case "m":this.cnt.accept("m");break;
+            case "n":this.cnt.accept("n");break;
+            case "o":this.cnt.accept("o");break;
+            case "p":this.cnt.accept("p");break;
+            case "q":this.cnt.accept("q");break;
+            case "r":this.cnt.accept("r");break;
+            case "s":this.cnt.accept("s");break;
+            case "t":this.cnt.accept("t");break;
+            case "u":this.cnt.accept("u");break;
+            case "v":this.cnt.accept("v");break;
+            case "w":this.cnt.accept("w");break;
+            case "x":this.cnt.accept("x");break;
+            case "y":this.cnt.accept("y");break;
+            case "z":this.cnt.accept("z");break;
+        }
+    }
 }
