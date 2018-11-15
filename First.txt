@@ -1,0 +1,57 @@
+class modifier extension
+final, class, abstract, interface
+
+class body declaration
+public, protected, private, body declaration
+
+body declaration
+field declaration, method initializer, data primitive, identifier, final, static
+transient, volatile, native, synchronized, void, 
+
+field declaration
+transient, volatile
+
+method initializer
+native, synchronized, void
+
+data primitive
+boolean, float, double, byte, short, int, long, char
+
+final declaration
+field modifier3 declaration, final additional mod
+
+field modifier3 declaration
+transient
+
+final additional mod
+synchronized
+
+data type declaration
+data primitive, identifier
+
+static declaration
+static method declaration, static initializer, synchronized modifier(synchronized), empty
+
+static method declaration
+final, void
+
+static initializer
+block ( { ), field declaration2 (transient, volatile)
+
+declaration type
+( , throws, = , [
+
+constant declaration
+public, static, final
+
+
+static method declaration
+data primitive b, identifier a
+a
+parameters throws, variable operator, [] identifier c
+b
+parameters throws, variable declarators ;
+method declarator
+identifier, parameters
+c
+parameters, array initializer
