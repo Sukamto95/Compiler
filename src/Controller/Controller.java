@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Controller {
 
-    List<String> listReservedWord, listAlphanumeric, listCharacters;
+    List<String> listReservedWord, listAlphanumeric, listSingleCharacters, listMultiCharacters;
     BufferedReader br;
     BufferedWriter bw;
     String isiFile = ""; //isi file murni, belum diapa-apain
@@ -46,11 +46,18 @@ public class Controller {
             listAlphanumeric.add(currentLine);
         }
 
-        //simpan isi file characters ke list
-        br = new BufferedReader(new FileReader("characters.txt"));
-        listCharacters = new ArrayList<>();
+        //simpan isi file singleCharacters ke list
+        br = new BufferedReader(new FileReader("singleCharacters.txt"));
+        listSingleCharacters = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
-            listCharacters.add(currentLine);
+            listSingleCharacters.add(currentLine);
+        }
+
+        //simpan isi file multiCharacters ke list
+        br = new BufferedReader(new FileReader("multiCharacters.txt"));
+        listMultiCharacters = new ArrayList<>();
+        while ((currentLine = br.readLine()) != null) {
+            listMultiCharacters.add(currentLine);
         }
     }
 
@@ -64,11 +71,11 @@ public class Controller {
         }
         br.close();
 
-        listOfSymbols = preprocess(isiFile);
+        listOfSymbols = parseSymbols(isiFile);
         symbol = listOfSymbols[0];
 
         new ProgramDeclaration(this).procedureA();
-        
+
         //cek apakah masih ada sisa input setelah program berakhir
         //jika ada, tampilkan error dan print seluruh sisa file
         if (cursor < listOfSymbols.length) {
@@ -92,11 +99,11 @@ public class Controller {
         //misalnya: input = (x+x+).
         //input yang bisa diterima adalah (x+x).
         //maka outputnya adalah: (x+x(Error)+).  sisa file ). tidak error
-        while(!isAccepted){
+        while (!isAccepted) {
             System.out.println("terminal - symbol = " + terminal + " - " + symbol);
-            if(cursor >= listOfSymbols.length){
+            if (cursor >= listOfSymbols.length) {
                 isAccepted = true;
-            } else{
+            } else {
                 if (terminal.equals(symbol)) {
                     isAccepted = true;
                     bw.write(symbol);
@@ -120,40 +127,39 @@ public class Controller {
         return this.symbol;
     }
 
-    private String[] preprocess(String isiFile) throws IOException {
-        String temp = "";
+    private String[] parseSymbols(String isiFile) throws IOException {
+        String temp;
         String lastKnown = "";
-        char c;
 
         isiFile = isiFile.replaceAll("\\s+", "");
         List<String> result = new ArrayList<>();
 
         for (int i = 0; i < isiFile.length(); i++) {
-            c = isiFile.charAt(i);
-            temp += c;
+            temp = isiFile.charAt(i)+"";
 
-            if (isReservedWord(lastKnown + temp) || isCharacters(lastKnown + temp)) {
+            if (isReservedWord(lastKnown + temp) || isMultiCharacters(lastKnown + temp)) {
                 for (int j = 0; j < lastKnown.length(); j++) {
                     //result.remove("" + lastKnown.charAt(j));
-                    result.remove(result.size()-1);
+                    result.remove(result.size() - 1);
                 }
                 result.add(lastKnown + temp);
                 lastKnown = "";
-                temp = "";
+            } else if (result.size() > 0 && isMultiCharacters(result.get(result.size() - 1) + temp)) {
+                result.add(result.remove(result.size() - 1) + temp);
+                lastKnown = "";
             } else {
                 result.add(temp);
-                if (!lastKnown.equalsIgnoreCase("")) {
-                    if (isCharacters(temp) && isCharacters("" + lastKnown.charAt(lastKnown.length() - 1))) {
+                if (lastKnown.equalsIgnoreCase("")) {
+                    lastKnown = temp;
+                } else {
+                    if (isSingleCharacters(temp) && isSingleCharacters("" + lastKnown.charAt(lastKnown.length() - 1))) {
                         lastKnown += temp;
                     } else if (isAlphanumeric(temp) && isAlphanumeric("" + lastKnown.charAt(lastKnown.length() - 1))) {
                         lastKnown += temp;
                     } else {
                         lastKnown = temp;
                     }
-                } else {
-                    lastKnown = temp;
                 }
-                temp = "";
             }
         }
 
@@ -182,8 +188,17 @@ public class Controller {
         return false;
     }
 
-    private boolean isCharacters(String in) {
-        for (String currentLine : listCharacters) {
+    private boolean isSingleCharacters(String in) {
+        for (String currentLine : listSingleCharacters) {
+            if (currentLine.equalsIgnoreCase(in)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isMultiCharacters(String in) {
+        for (String currentLine : listMultiCharacters) {
             if (currentLine.equalsIgnoreCase(in)) {
                 return true;
             }
