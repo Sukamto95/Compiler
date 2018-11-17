@@ -1341,89 +1341,259 @@ public class ProgramDeclaration {
 
     //Expression
     public void assignmentExpression() throws IOException {
-        if () {
-
-        } else if () {
-
+        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
+                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals("--")
+                || cnt.symbol.equals("++") || cnt.symbol.equals("0") || cnt.symbol.equals("1") || cnt.symbol.equals("2")
+                || cnt.symbol.equals("3") || cnt.symbol.equals("4") || cnt.symbol.equals("5") || cnt.symbol.equals("6")
+                || cnt.symbol.equals("7") || cnt.symbol.equals("8") || cnt.symbol.equals("9") || cnt.symbol.equals("true")
+                || cnt.symbol.equals("false") || cnt.symbol.equals("\'") || cnt.symbol.equals("\"") || cnt.symbol.equals("null")
+                || cnt.symbol.equals("new") || cnt.symbol.equals("(")
+                || cnt.symbol.equals("+") || cnt.symbol.equals("-") || cnt.symbol.equals("~")) {
+            expression();
+        } else if (cnt.symbol.equals("super") || cnt.symbol.equals("this")) {
+            assignment();
         }
     }
 
     public void expression() throws IOException {
+        additiveExpression();
+        multiplicativeOperator();
     }
 
     public void multiplicativeOperator() throws IOException {
+        if (cnt.symbol.equals("*")) {
+            this.cnt.accept("*");
+            expression();
+        } else if (cnt.symbol.equals("/")) {
+            this.cnt.accept("/");
+            expression();
+        } else if (cnt.symbol.equals("%")) {
+            this.cnt.accept("%");
+            expression();
+        }
     }
 
     public void additiveExpression() throws IOException {
+        shiftExpression();
+        additiveOperator();
     }
 
     public void additiveOperator() throws IOException {
+        if (cnt.symbol.equals("+")) {
+            this.cnt.accept("+");
+            additiveExpression();
+        } else if (cnt.symbol.equals("-")) {
+            this.cnt.accept("-");
+            additiveExpression();
+        }
     }
 
     public void shiftExpression() throws IOException {
+        relationalExpression();
+        shiftOperator();
     }
 
     public void shiftOperator() throws IOException {
+        if (cnt.symbol.equals(">>")) {
+            this.cnt.accept(">>");
+            shiftExpression();
+        } else if (cnt.symbol.equals("<<")) {
+            this.cnt.accept("<<");
+            shiftExpression();
+        } else if (cnt.symbol.equals(">>>")) {
+            this.cnt.accept(">>>");
+            shiftExpression();
+        }
     }
 
     public void relationalExpression() throws IOException {
+        equalityExpression();
+        relationalOperator();
     }
 
     public void relationalOperator() throws IOException {
+        if (cnt.symbol.equals("<")) {
+            this.cnt.accept("<");
+            relationalExpression();
+        } else if (cnt.symbol.equals(">")) {
+            this.cnt.accept(">");
+            relationalExpression();
+        } else if (cnt.symbol.equals("<=")) {
+            this.cnt.accept("<=");
+            relationalExpression();
+        } else if (cnt.symbol.equals(">=")) {
+            this.cnt.accept(">=");
+            relationalExpression();
+        } else if (cnt.symbol.equals("instanceof")) {
+            this.cnt.accept("instanceof");
+            relationalExpression();
+        }
     }
 
     public void equalityExpression() throws IOException {
+        andExpression();
+        equalityOperator();
     }
 
     public void equalityOperator() throws IOException {
+        if (cnt.symbol.equals("==")) {
+            this.cnt.accept("==");
+            equalityExpression();
+        } else if (cnt.symbol.equals("!=")) {
+            this.cnt.accept("!=");
+            equalityExpression();
+        }
     }
 
     public void andExpression() throws IOException {
+        exclusiveOr();
+        andOperator();
     }
 
     public void andOperator() throws IOException {
+        if (cnt.symbol.equals("&")) {
+            this.cnt.accept("&");
+            andExpression();
+        }
     }
 
     public void exclusiveOr() throws IOException {
+        inclusiveOr();
+        exclusiveOperator();
     }
 
     public void exclusiveOperator() throws IOException {
+        if (cnt.symbol.equals("^")) {
+            this.cnt.accept("^");
+            exclusiveOr();
+        }
     }
 
     public void inclusiveOr() throws IOException {
+        conditionalAnd();
+        inclusiveOrOperator();
     }
 
     public void inclusiveOrOperator() throws IOException {
+        if (cnt.symbol.equals("|")) {
+            this.cnt.accept("|");
+            inclusiveOr();
+        }
     }
 
     public void conditionalAnd() throws IOException {
+        conditionalOr();
+        conditionalAndOperator();
     }
 
     public void conditionalAndOperator() throws IOException {
+        if (cnt.symbol.equals("&&")) {
+            this.cnt.accept("&&");
+            conditionalAnd();
+        }
     }
 
     public void conditionalOr() throws IOException {
+        unaryExpression();
+        conditionalOrOperator();
     }
 
     public void conditionalOrOperator() throws IOException {
+        if (cnt.symbol.equals("?")) {
+            this.cnt.accept("?");
+            assignmentExpression();
+            this.cnt.accept(":");
+            expression();
+        }
     }
 
     public void castType() throws IOException {
+        if (cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
+                || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
+                || cnt.symbol.equals("long") || cnt.symbol.equals("char")) {
+            primitiveType();
+        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
+                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+            identifier();
+        }
     }
 
     public void unaryExpression() throws IOException {
+        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
+                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+            expressionName();
+            postExpressionName();
+        } else if (cnt.symbol.equals("--") || cnt.symbol.equals("++")) {
+            incrementDecrement();
+            expressionName();
+        } else if (cnt.symbol.equals("0") || cnt.symbol.equals("1") || cnt.symbol.equals("2")
+                || cnt.symbol.equals("3") || cnt.symbol.equals("4") || cnt.symbol.equals("5") || cnt.symbol.equals("6")
+                || cnt.symbol.equals("7") || cnt.symbol.equals("8") || cnt.symbol.equals("9") || cnt.symbol.equals("true")
+                || cnt.symbol.equals("false") || cnt.symbol.equals("\'") || cnt.symbol.equals("\"") || cnt.symbol.equals("null")
+                || cnt.symbol.equals("new") || cnt.symbol.equals("super") || cnt.symbol.equals("this")) {
+            primary();
+        } else if (cnt.symbol.equals("(")) {
+            this.cnt.accept("(");
+            castType();
+            this.cnt.accept(")");
+            unaryExpression();
+        } else if (cnt.symbol.equals("+")) {
+            this.cnt.accept("+");
+            unaryExpression();
+        } else if (cnt.symbol.equals("-")) {
+            this.cnt.accept("-");
+            unaryExpression();
+        } else if (cnt.symbol.equals("~")) {
+            this.cnt.accept("~");
+            unaryExpression();
+        }
     }
 
     public void incrementDecrement() throws IOException {
+        if (cnt.symbol.equals("--")) {
+            this.cnt.accept("--");
+        } else if (cnt.symbol.equals("++")) {
+            this.cnt.accept("++");
+        }
     }
 
     public void postExpressionName() throws IOException {
+        if (cnt.symbol.equals("--") || cnt.symbol.equals("++")) {
+            incrementDecrement();
+        } else if (cnt.symbol.equals(".")) {
+            while (cnt.symbol.equals(".")) {
+                this.cnt.accept(".");
+                identifier();
+            }
+            arrayOrAssignment();
+        }
     }
 
     public void arrayOrAssignment() throws IOException {
+        if (cnt.symbol.equals("[")) {
+            arrayAccess();
+        } else if (cnt.symbol.equals("=") || cnt.symbol.equals("*=") || cnt.symbol.equals("/=")
+                || cnt.symbol.equals("%=") || cnt.symbol.equals("+=") || cnt.symbol.equals("-=")
+                || cnt.symbol.equals("<<=") || cnt.symbol.equals(">>=") || cnt.symbol.equals(">>>=")
+                || cnt.symbol.equals("&=") || cnt.symbol.equals("^=") || cnt.symbol.equals("|=")) {
+            assignmentOperator();
+            expression();
+        }
     }
 
     public void primary() throws IOException {
+        if (cnt.symbol.equals("0") || cnt.symbol.equals("1") || cnt.symbol.equals("2")
+                || cnt.symbol.equals("3") || cnt.symbol.equals("4") || cnt.symbol.equals("5") || cnt.symbol.equals("6")
+                || cnt.symbol.equals("7") || cnt.symbol.equals("8") || cnt.symbol.equals("9") || cnt.symbol.equals("true")
+                || cnt.symbol.equals("false") || cnt.symbol.equals("\'") || cnt.symbol.equals("\"") || cnt.symbol.equals("null")) {
+            literal();
+            while(cnt.symbol.equals(".")){
+                this.cnt.accept(".");
+                methodInvocation();
+            }
+        } else if (cnt.symbol.equals("new")){
+            
+        }
     }
 
     public void instanceCreationExpression() throws IOException {

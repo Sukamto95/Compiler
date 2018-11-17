@@ -1,19 +1,2 @@
-=======
-,if(true)publicstaticvoid main
-<<=
-<=
-<<
->>>=
->>=
->>>
->=
->>
-,if(true)publicstaticvoid main
-<<=
-<=
-<<
->>>=
->>=
->>>
->=
->>
+\'
+\"
