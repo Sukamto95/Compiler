@@ -51,24 +51,23 @@ public class ProgramDeclaration {
 
     //Program Declaration
     public void compilationUnit() throws IOException {
-        switch (cnt.symbol) {
-            case ("package"):
-                packageDeclaration();
-                while (cnt.symbol.equals("import")) {
-                    importDeclaration();
-                }
-                while (cnt.symbol.equals("public") || cnt.symbol.equals("final") || cnt.symbol.equals("class") || cnt.symbol.equals("interface")) {
-                    classDeclaration();
-                }
-                break;
-            case ("import"):
-                while (cnt.symbol.equals("import")) {
-                    importDeclaration();
-                }
-                while (cnt.symbol.equals("public") || cnt.symbol.equals("final") || cnt.symbol.equals("class") || cnt.symbol.equals("interface")) {
-                    classDeclaration();
-                }
-                break;
+        if(cnt.symbol.equals("package")){
+            packageDeclaration();
+            while (cnt.symbol.equals("import")) {
+                importDeclaration();
+            }
+            while (cnt.symbol.equals("public") || cnt.symbol.equals("final") || cnt.symbol.equals("class") || cnt.symbol.equals("interface") || cnt.symbol.equals("abstract")) {
+                classDeclaration();
+            }
+        } else if(cnt.symbol.equals("import") || cnt.symbol.equals("final")
+                || cnt.symbol.equals("class") || cnt.symbol.equals("interface")
+                || cnt.symbol.equals("abstract") || cnt.symbol.equals("public")){
+            while (cnt.symbol.equals("import")) {
+                importDeclaration();
+            }
+            while (cnt.symbol.equals("public") || cnt.symbol.equals("final") || cnt.symbol.equals("class") || cnt.symbol.equals("interface") || cnt.symbol.equals("abstract")) {
+                classDeclaration();
+            }
         }
     }
 
@@ -229,8 +228,8 @@ public class ProgramDeclaration {
             case ("public"):
                 this.cnt.accept("public");
                 break;
-            case ("private"):
-                this.cnt.accept("private");
+            case ("protected"):
+                this.cnt.accept("protected");
                 break;
         }
     }
@@ -573,7 +572,8 @@ public class ProgramDeclaration {
         if (cnt.symbol.equals("(")) {
             parameters();
             throws1();
-        } else if (cnt.symbol.equals("[") || cnt.symbol.equals("=")) {
+        } else if (cnt.symbol.equals("[") || cnt.symbol.equals("=") 
+                || cnt.symbol.equals(",") || cnt.symbol.equals(";")) {
             variableOption();
             variableLooping();
             this.cnt.accept(";");

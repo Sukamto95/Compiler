@@ -1,3 +1,21 @@
-public class NewClass {
+package Controller;
+
+import Model.ProgramDeclaration;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Animal {
+    protected int age = 23, weight = 52;
+    public static final int MOUTH = 1;
     
+    public Animal(){
+        this("Molly",2);
+    }
 }
