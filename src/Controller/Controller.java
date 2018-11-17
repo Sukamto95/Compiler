@@ -74,7 +74,7 @@ public class Controller {
         listOfSymbols = parseSymbols(isiFile);
         symbol = listOfSymbols[0];
 
-        new ProgramDeclaration(this).procedureA();
+        new ProgramDeclaration(this).compilationUnit();
 
         //cek apakah masih ada sisa input setelah program berakhir
         //jika ada, tampilkan error dan print seluruh sisa file
