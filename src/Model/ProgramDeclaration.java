@@ -792,12 +792,16 @@ public class ProgramDeclaration {
     }
 
     public void synchronizedMethodDeclaration() throws IOException {
-        finalModInitializer();
+        if (cnt.symbol.equals("final")) {
+            finalModInitializer();
+        }
     }
 
     public void finalAdditionalMod() throws IOException {
-        synchronizedModifier();
-        staticModInitializer();
+        if (cnt.symbol.equals("synchronized")) {
+            synchronizedModifier();
+            staticModInitializer();
+        }
     }
 
     public void synchronizedAdditionalMod() throws IOException {
@@ -811,15 +815,21 @@ public class ProgramDeclaration {
     }
 
     public void staticModInitializer() throws IOException {
-        staticModifier();
+        if (cnt.symbol.equals("static")) {
+            staticModifier();
+        }
     }
 
     public void finalModInitializer() throws IOException {
-        finalModifier();
+        if (cnt.symbol.equals("final")) {
+            finalModifier();
+        }
     }
 
     public void synchronizedModInitializer() throws IOException {
-        synchronizedModifier();
+        if (cnt.symbol.equals("synchronized")) {
+            synchronizedModifier();
+        }
     }
 
     public void methodDeclarator() throws IOException {
@@ -1127,8 +1137,10 @@ public class ProgramDeclaration {
     }
 
     public void elseStatement() throws IOException {
-        this.cnt.accept("else");
-        statement();
+        if (cnt.symbol.equals("else")) {
+            this.cnt.accept("else");
+            statement();
+        }
     }
 
     public void switchStatement() throws IOException {
@@ -1232,12 +1244,16 @@ public class ProgramDeclaration {
     }
 
     public void forUpdate() throws IOException {
-        statementExpressionList();
+        if (cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("--")
+                || cnt.symbol.equals("++") || cnt.symbol.equals("new") || cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
+                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+            statementExpressionList();
+        }
     }
 
     public void statementExpressionList() throws IOException {
         statementExpression();
-        while(cnt.symbol.equals(",")){
+        while (cnt.symbol.equals(",")) {
             this.cnt.accept(",");
             statementExpression();
         }
@@ -1256,7 +1272,10 @@ public class ProgramDeclaration {
     }
 
     public void breakContinueIdentifier() throws IOException {
-        identifier();
+        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
+                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+            identifier();
+        }
     }
 
     public void returnStatement() throws IOException {
@@ -1286,28 +1305,47 @@ public class ProgramDeclaration {
     }
 
     public void catchStatement() throws IOException {
-        if (cnt.symbol.equals("catch")){
+        if (cnt.symbol.equals("catch")) {
             catches();
             finallyInitializer();
-        } else if (cnt.symbol.equals("finally")){
+        } else if (cnt.symbol.equals("finally")) {
             finallyStatement();
         }
     }
 
     public void finallyInitializer() throws IOException {
+        if (cnt.symbol.equals("finally")) {
+            finallyStatement();
+        }
     }
 
     public void catches() throws IOException {
+        catchClause();
+        while (cnt.symbol.equals("catch")) {
+            catchClause();
+        }
     }
 
     public void catchClause() throws IOException {
+        this.cnt.accept("catch");
+        this.cnt.accept("(");
+        formalParameter();
+        this.cnt.accept(")");
+        block();
     }
 
     public void finallyStatement() throws IOException {
+        this.cnt.accept("finally");
+        block();
     }
 
     //Expression
     public void assignmentExpression() throws IOException {
+        if () {
+
+        } else if () {
+
+        }
     }
 
     public void expression() throws IOException {
