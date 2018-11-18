@@ -4,8 +4,6 @@ int z={
 1,2,3,4}
 ;
 age+= 5;
-age;
 }
 }
-
-Tidak ada error
+(Error)packageModel;importController.Controller;importjava.io.IOException;

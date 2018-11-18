@@ -1,7 +1,10 @@
 public class Number {
     public int hello(int age, int weight){
-		int z = {1,2,3,4};
-		age += 5;
-		age;
+  int z = {1,2,3,4};
+  age += 5;
     }
 }
+package Model;
+
+import Controller.Controller;
+import java.io.IOException;
