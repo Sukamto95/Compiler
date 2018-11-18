@@ -1,2 +1,28 @@
-packageModel;importController.Controller;importjava.io.IOException;publicabstractclassAnimal{publicintage,weight;publicfinalstaticintMOUTH=1;publicAnimal(intage,intweight){age+=5;this.age=age;this.weight=weight;}publicinthello(intage,intweight){age+=5;age++;--weight;this.age=age;this.weight=weight;}}
+package Model;
+import Controller.Controller;
+import java.io.IOException;
+public abstract class Animal{
+public Stringhello;
+public int age,weight;
+public final static int MOUTH=1;
+public Animal(int age,int weight){
+age+= 5;
+this.age=age;
+this.weight=weight;
+int a="b".length();
+Stringhallo=new String();
+hello=new String();
+}
+public int hello(int age,int weight){
+int []z={
+1,2,3,4}
+;
+age+= 5;
+age++ ;
+-- weight;
+this.age=age;
+this.weight=weight;
+}
+}
+
 Tidak ada error

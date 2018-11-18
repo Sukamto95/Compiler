@@ -311,6 +311,7 @@ public class ProgramDeclaration {
                 throws1();
                 break;
             case ("="):
+            case (";"):
                 variableOperator();
                 variableLooping();
                 this.cnt.accept(";");
@@ -630,11 +631,27 @@ public class ProgramDeclaration {
                 break;
         }
     }
-
+    
+    public void variableOption2() throws IOException {
+        if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals("--")
+                || cnt.symbol.equals("++") || cnt.symbol.equals("(") || cnt.symbol.equals("+")
+                || cnt.symbol.equals("-") || cnt.symbol.equals("~") || cnt.symbol.equals("new")
+                || cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("true")
+                || cnt.symbol.equals("false") || cnt.symbol.equals("null") || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) == 34)
+                || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) == 39) || (cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57))) {
+            variableInitializer();
+        } else if(cnt.symbol.equals("{")){
+            this.cnt.accept("{");
+            arrayTypeInitializer();
+            this.cnt.accept("}");
+        }
+    }
+    
     public void variableOperator() throws IOException {
         if (cnt.symbol.equals("=")) {
             this.cnt.accept("=");
-            variableInitializer();
+            variableOption2();
         }
     }
 
@@ -2090,7 +2107,8 @@ public class ProgramDeclaration {
     }
 
     public void characterLiteralOption() throws IOException {
-        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if ((cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 38)
+                || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 40 && (int) cnt.symbol.charAt(0) <= 91)) {
             singleCharacter();
         } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             singleCharacter();
@@ -2102,7 +2120,8 @@ public class ProgramDeclaration {
     }
 
     public void singleCharacter() throws IOException {
-        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if (cnt.symbol.equals("!") || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 35 && (int) cnt.symbol.charAt(0) <= 38)
+                || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 40 && (int) cnt.symbol.charAt(0) <= 91)) {
             inputCharacter();
         } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             inputCharacter();
@@ -2113,7 +2132,7 @@ public class ProgramDeclaration {
 
     public void stringLiteral() throws IOException {
         this.cnt.accept("\"");
-        while (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91
+        while (cnt.symbol.equals("!") || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 35 && (int) cnt.symbol.charAt(0) <= 91)
                 || cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126
                 || cnt.symbol.equals("\'") || cnt.symbol.equals("\\t") || cnt.symbol.equals("\\b")
                 || cnt.symbol.equals("\\n") || cnt.symbol.equals("\\r") || cnt.symbol.equals("\\f")
@@ -2285,7 +2304,8 @@ public class ProgramDeclaration {
     }
 
     public void stringCharacter() throws IOException {
-        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if (cnt.symbol.equals("!") || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 35 && (int) cnt.symbol.charAt(0) <= 38)
+                || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 40 && (int) cnt.symbol.charAt(0) <= 91)) {
             inputCharacter();
         } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             inputCharacter();
@@ -2365,7 +2385,8 @@ public class ProgramDeclaration {
     }
 
     public void allInputCharacter() throws IOException {
-        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if (cnt.symbol.equals("!") || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 35 && (int) cnt.symbol.charAt(0) <= 38)
+                || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 40 && (int) cnt.symbol.charAt(0) <= 91)) {
             inputCharacter();
         } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             inputCharacter();

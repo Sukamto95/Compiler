@@ -34,7 +34,6 @@ public
 return
 short
 static
-string
 super
 switch
 synchronized

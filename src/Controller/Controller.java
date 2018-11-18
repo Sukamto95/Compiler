@@ -111,6 +111,11 @@ public class Controller {
                     isError = true;
                     bw.write("(Error)" + symbol);
                 }
+                if(symbol.equals(";") || symbol.equals("{") || symbol.equals("}")){
+                    bw.write("\n");
+                } else if(symbol.length()>1 && !symbol.equals("this") && !symbol.equals("super")){
+                    bw.write(" ");
+                }
             }
             readNextSymbol();
         }

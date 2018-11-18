@@ -4,6 +4,7 @@ import Controller.Controller;
 import java.io.IOException;
 
 public abstract class Animal {
+    public String hello;
     public int age, weight;
     public final static int MOUTH = 1;
     
@@ -11,9 +12,13 @@ public abstract class Animal {
 	age += 5;
         this.age = age;
 	this.weight = weight;
+	int a= "b".length();
+	String hallo = new String();
+	hello = new String();
     }
 
 public int hello(int age, int weight){
+	int[] z = {1,2,3,4};
 	age += 5;
 	age++;
 	--weight;
