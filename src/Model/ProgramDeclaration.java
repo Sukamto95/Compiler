@@ -360,6 +360,7 @@ public class ProgramDeclaration {
     public void staticDeclaration() throws IOException {
         if (cnt.symbol.equals("final") || cnt.symbol.equals("void")) {
             staticMethodDeclaration();
+            block();
         } else if (cnt.symbol.equals("{") || cnt.symbol.equals("transient") || cnt.symbol.equals("volatile")) {
             staticInitializer();
         } else if (cnt.symbol.equals("synchronized")) {

@@ -19,15 +19,17 @@ public class Controller {
     List<String> listReservedWord, listAlphanumeric, listSingleCharacters, listMultiCharacters;
     BufferedReader br;
     BufferedWriter bw;
-    String isiFile = ""; //isi file murni, belum diapa-apain
-    String[] listOfSymbols; //kumpulan simbol setelah dipisahin
+    String isiFile = ""; //isi file murni, belum diproses
+    String[] listOfSymbols; //kumpulan simbol setelah dipisahkan
     public String symbol; //simbol yang sedang diproses
     int cursor; //penunjuk simbol yang sedang dicek
     boolean isError = false;
+    String namaFileOutput;
 
-    public Controller() throws FileNotFoundException, IOException {
+    public Controller(String namaFileInput, String namaFileOutput) throws FileNotFoundException, IOException {
         initList();
-        br = new BufferedReader(new FileReader("input.txt"));
+        br = new BufferedReader(new FileReader(namaFileInput));
+        this.namaFileOutput = namaFileOutput;
     }
 
     private void initList() throws FileNotFoundException, IOException {
@@ -62,7 +64,7 @@ public class Controller {
     }
 
     public void start() throws IOException {
-        bw = new BufferedWriter(new FileWriter(new File("output.txt")));
+        bw = new BufferedWriter(new FileWriter(new File(this.namaFileOutput)));
         cursor = 0;
         String currentLine;
 
@@ -111,9 +113,9 @@ public class Controller {
                     isError = true;
                     bw.write("(Error)" + symbol);
                 }
-                if(symbol.equals(";") || symbol.equals("{") || symbol.equals("}")){
+                if (symbol.equals(";") || symbol.equals("{") || symbol.equals("}")) {
                     bw.write("\n");
-                } else if(symbol.length()>1 && !symbol.equals("this") && !symbol.equals("super")){
+                } else if (symbol.length() > 1 && !symbol.equals("this") && !symbol.equals("super")) {
                     bw.write(" ");
                 }
             }
@@ -140,7 +142,7 @@ public class Controller {
         List<String> result = new ArrayList<>();
 
         for (int i = 0; i < isiFile.length(); i++) {
-            temp = isiFile.charAt(i)+"";
+            temp = isiFile.charAt(i) + "";
 
             if (isReservedWord(lastKnown + temp) || isMultiCharacters(lastKnown + temp)) {
                 for (int j = 0; j < lastKnown.length(); j++) {
@@ -149,7 +151,7 @@ public class Controller {
                 }
                 result.add(lastKnown + temp);
                 lastKnown = "";
-            } else if (result.size() > 0 && isMultiCharacters(result.get(result.size() - 1) + temp)) {
+            } else if (result.size() > 0 && isMultiCharacters(result.get(result.size() - 1) + temp) || result.size() > 0 && isReservedWord(result.get(result.size() - 1) + temp)) {
                 result.add(result.remove(result.size() - 1) + temp);
                 lastKnown = "";
             } else {

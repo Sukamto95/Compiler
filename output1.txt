@@ -6,9 +6,9 @@ public Stringhello;
 public int age,weight;
 public final static int MOUTH=1;
 public Animal(int age,int weight){
-age+= 5;
 this.age=age;
 this.weight=weight;
+age+= 5;
 int a="b".length();
 Stringhallo=new String();
 hello=new String();

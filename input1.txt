@@ -9,9 +9,9 @@ public abstract class Animal {
     public final static int MOUTH = 1;
     
     public Animal(int age, int weight){
-	age += 5;
-        this.age = age;
+    this.age = age;
 	this.weight = weight;
+	age += 5;
 	int a= "b".length();
 	String hallo = new String();
 	hello = new String();
@@ -22,7 +22,7 @@ public int hello(int age, int weight){
 	age += 5;
 	age++;
 	--weight;
-        this.age = age;
+    this.age = age;
 	this.weight = weight;
     }
 }
