@@ -7,9 +7,9 @@ import java.io.IOException;
  * @author Sukamto 23518017 Andreas Novian 23518002
  */
 public class ProgramDeclaration {
-
+    
     Controller cnt;
-
+    
     public ProgramDeclaration(Controller cont) {
         this.cnt = cont;
     }
@@ -200,8 +200,7 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("native") || cnt.symbol.equals("void") || cnt.symbol.equals("boolean")
                 || cnt.symbol.equals("float") || cnt.symbol.equals("double") || cnt.symbol.equals("byte") || cnt.symbol.equals("short")
                 || cnt.symbol.equals("int") || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             classBodyDeclaration();
         }
         this.cnt.accept("}");
@@ -213,8 +212,7 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("native") || cnt.symbol.equals("void") || cnt.symbol.equals("boolean")
                 || cnt.symbol.equals("float") || cnt.symbol.equals("double") || cnt.symbol.equals("byte") || cnt.symbol.equals("short")
                 || cnt.symbol.equals("int") || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             abstractMethodModifier();
             bodyDeclaration();
         } else if (cnt.symbol.equals("private")) {
@@ -241,8 +239,7 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("native") || cnt.symbol.equals("abstract") || cnt.symbol.equals("void") || cnt.symbol.equals("boolean")
                 || cnt.symbol.equals("float") || cnt.symbol.equals("double") || cnt.symbol.equals("byte") || cnt.symbol.equals("short")
                 || cnt.symbol.equals("int") || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             abstractClassBodyDeclaration();
         }
         this.cnt.accept("}");
@@ -254,8 +251,7 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("native") || cnt.symbol.equals("abstract") || cnt.symbol.equals("void") || cnt.symbol.equals("boolean")
                 || cnt.symbol.equals("float") || cnt.symbol.equals("double") || cnt.symbol.equals("byte") || cnt.symbol.equals("short")
                 || cnt.symbol.equals("int") || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             abstractMethodModifier();
             bodyDeclaration();
         } else if (cnt.symbol.equals("private")) {
@@ -278,8 +274,7 @@ public class ProgramDeclaration {
         } else if (cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             dataTypeDeclaration();
         }
     }
@@ -290,16 +285,14 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char")) {
             dataPrimitive();
             dataPrimitiveDeclaration();
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        } else if (cnt.symbol.equals("_") || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             declarationType();
         }
     }
 
     public void dataPrimitiveDeclaration() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        if (cnt.symbol.equals("_") || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             variableOrMethodOption();
         } else if (cnt.symbol.equals("[")) {
@@ -333,8 +326,7 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("native") || cnt.symbol.equals("void") || cnt.symbol.equals("boolean")
                 || cnt.symbol.equals("float") || cnt.symbol.equals("double") || cnt.symbol.equals("byte") || cnt.symbol.equals("short")
                 || cnt.symbol.equals("int") || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             bodyDeclaration();
         } else if (cnt.symbol.equals("abstract")) {
             abstractMethodDeclaration();
@@ -356,8 +348,7 @@ public class ProgramDeclaration {
         if (cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             dataTypeDeclaration();
         } else if (cnt.symbol.equals("final") || cnt.symbol.equals("void") || cnt.symbol.equals("synchronized")
                 || cnt.symbol.equals("transient") || cnt.symbol.equals("volatile") || cnt.symbol.equals("{")) {
@@ -431,8 +422,7 @@ public class ProgramDeclaration {
         while (cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             formalParameter();
         }
         this.cnt.accept(")");
@@ -441,6 +431,9 @@ public class ProgramDeclaration {
     public void formalParameter() throws IOException {
         dataType();
         identifier();
+        if(cnt.symbol.equals(",")){
+            this.cnt.accept(",");
+        }
     }
 
     public void throws1() throws IOException {
@@ -465,8 +458,7 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             blockStatement();
         }
         this.cnt.accept("}");
@@ -548,12 +540,18 @@ public class ProgramDeclaration {
         switch (cnt.symbol) {
             case ("volatile"):
                 fieldModifier3();
-                fieldModifier2();
+                fieldModifier2Option();
                 break;
             case ("transient"):
                 fieldModifier2();
                 fieldModifier3Initializer();
                 break;
+        }
+    }
+    
+    public void fieldModifier2Option() throws IOException {
+        if(cnt.symbol.equals("transient")){
+            this.cnt.accept("transient");
         }
     }
 
@@ -572,6 +570,7 @@ public class ProgramDeclaration {
         if (cnt.symbol.equals("(")) {
             parameters();
             throws1();
+            block();
         } else if (cnt.symbol.equals("[") || cnt.symbol.equals("=") 
                 || cnt.symbol.equals(",") || cnt.symbol.equals(";")) {
             variableOption();
@@ -589,8 +588,7 @@ public class ProgramDeclaration {
     }
 
     public void variableDeclarator() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        if (cnt.symbol.equals("_") || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             variableOption();
         } else if (cnt.symbol.equals("[")) {
@@ -609,8 +607,8 @@ public class ProgramDeclaration {
     }
 
     public void arrayDeclaration() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             arrayInitializer();
         }
@@ -641,13 +639,13 @@ public class ProgramDeclaration {
     }
 
     public void variableInitializers() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals("--")
+        if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals("--")
                 || cnt.symbol.equals("++") || cnt.symbol.equals("(") || cnt.symbol.equals("+")
                 || cnt.symbol.equals("-") || cnt.symbol.equals("~") || cnt.symbol.equals("new")
                 || cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("true")
-                || cnt.symbol.equals("false") || cnt.symbol.equals("null") || (int) cnt.symbol.charAt(0) == 34
-                || (int) cnt.symbol.charAt(0) == 39 || ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)) {
+                || cnt.symbol.equals("false") || cnt.symbol.equals("null") || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) == 34)
+                || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) == 39) || (cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57))) {
             variableInitializer();
             while (cnt.symbol.equals(",")) {
                 this.cnt.accept(",");
@@ -676,13 +674,13 @@ public class ProgramDeclaration {
     }
 
     public void arrayTypeInitializer() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals("--")
+        if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals("--")
                 || cnt.symbol.equals("++") || cnt.symbol.equals("(") || cnt.symbol.equals("+")
                 || cnt.symbol.equals("-") || cnt.symbol.equals("~") || cnt.symbol.equals("new")
                 || cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("true")
-                || cnt.symbol.equals("false") || cnt.symbol.equals("null") || (int) cnt.symbol.charAt(0) == 34
-                || (int) cnt.symbol.charAt(0) == 39 || ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)) {
+                || cnt.symbol.equals("false") || cnt.symbol.equals("null") || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) == 34)
+                || (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) == 39) || (cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57))) {
             variableInitializers();
         } else if (cnt.symbol.equals("{")) {
             this.cnt.accept("{");
@@ -722,6 +720,7 @@ public class ProgramDeclaration {
     public void methodInitializer() throws IOException {
         switch (cnt.symbol) {
             case ("synchronized"):
+            case ("void"):
                 methodDeclaration();
                 block();
                 break;
@@ -868,8 +867,8 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char")) {
             dataPrimitive();
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        } else if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             while (cnt.symbol.equals("[")) {
                 this.cnt.accept("[");
@@ -925,8 +924,7 @@ public class ProgramDeclaration {
         while (cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals(";")
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals(";")
                 || cnt.symbol.equals("switch") || cnt.symbol.equals("do") || cnt.symbol.equals("break")
                 || cnt.symbol.equals("continue") || cnt.symbol.equals("return") || cnt.symbol.equals("synchronized")
                 || cnt.symbol.equals("throws") || cnt.symbol.equals("try") || cnt.symbol.equals("if")
@@ -944,8 +942,8 @@ public class ProgramDeclaration {
             dataPrimitive();
             variableDeclarators();
             this.cnt.accept(";");
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        } else if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             blockStatementOption();
         } else if (cnt.symbol.equals("{") || cnt.symbol.equals(";")
@@ -970,7 +968,10 @@ public class ProgramDeclaration {
         } else if (cnt.symbol.equals(":")) {
             this.cnt.accept(":");
             statement();
-        } else if (cnt.symbol.equals("--") || cnt.symbol.equals("++") || cnt.symbol.equals("(") || cnt.symbol.equals(".")) {
+        } else if (cnt.symbol.equals("--") || cnt.symbol.equals("++") || cnt.symbol.equals("(") || cnt.symbol.equals(".")
+                || cnt.symbol.equals("=") || cnt.symbol.equals("*=") || cnt.symbol.equals("/=") || cnt.symbol.equals("%=")
+                || cnt.symbol.equals("+=") || cnt.symbol.equals("-=") || cnt.symbol.equals("<<=") || cnt.symbol.equals(">>=")
+                || cnt.symbol.equals(">>>=") || cnt.symbol.equals("&=") || cnt.symbol.equals("^=") || cnt.symbol.equals("|=")) {
             postIdentifier();
             this.cnt.accept(";");
         }
@@ -1028,8 +1029,8 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("while") || cnt.symbol.equals("for")) {
             statementWithoutExpressionStatement();
         } else if (cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("--")
-                || cnt.symbol.equals("++") || cnt.symbol.equals("new") || cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || cnt.symbol.equals("++") || cnt.symbol.equals("new") || cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             expressionStatement();
         }
     }
@@ -1057,8 +1058,8 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("++") || cnt.symbol.equals("new")) {
             statementExpr();
             this.cnt.accept(";");
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        } else if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             identifierStatement();
         }
@@ -1078,8 +1079,8 @@ public class ProgramDeclaration {
         if (cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("--")
                 || cnt.symbol.equals("++") || cnt.symbol.equals("new")) {
             statementExpr();
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        } else if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             postIdentifier();
         }
@@ -1088,8 +1089,12 @@ public class ProgramDeclaration {
     public void statementExpr() throws IOException {
         switch (cnt.symbol) {
             case "super":
+                this.cnt.accept("super");
+                thisSuperOption();
+                break;
             case "this":
-                assignment();
+                this.cnt.accept("this");
+                thisSuperOption();
                 break;
             case "--":
             case "++":
@@ -1100,6 +1105,24 @@ public class ProgramDeclaration {
                 this.cnt.accept("new");
                 identifier();
                 classInstanceCreationExpression();
+                break;
+        }
+    }
+    
+    public void thisSuperOption() throws IOException{
+        switch(cnt.symbol){
+            case ("."):
+                this.cnt.accept(".");
+                identifier();
+                while(cnt.symbol.equals(".")){
+                    this.cnt.accept(".");
+                    identifier();
+                }
+                arrayAccess();
+                assignment();
+                break;
+            case ("("):
+                parameters();
                 break;
         }
     }
@@ -1115,13 +1138,14 @@ public class ProgramDeclaration {
                 argumentList();
                 this.cnt.accept(")");
                 break;
-            case ".":
+            case ".":case "=":case "*=":case "/=":case "%=":case"+=":
+            case "-=":case "<<=":case ">>=":case ">>>=":case "&=":
+            case "^=":case "|=":
                 while (cnt.symbol.equals(".")) {
                     this.cnt.accept(".");
                     identifier();
                 }
-                assignmentOperator();
-                expression();
+                assignment();
                 break;
         }
     }
@@ -1164,8 +1188,8 @@ public class ProgramDeclaration {
         while (cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals(";")
+                
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals(";")
                 || cnt.symbol.equals("switch") || cnt.symbol.equals("do") || cnt.symbol.equals("break")
                 || cnt.symbol.equals("continue") || cnt.symbol.equals("return") || cnt.symbol.equals("synchronized")
                 || cnt.symbol.equals("throws") || cnt.symbol.equals("try") || cnt.symbol.equals("if")
@@ -1223,30 +1247,30 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char")) {
             dataType();
             variableDeclarators();
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals("[")) {
+        } else if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals("[")) {
             variableDeclarators();
         }
     }
 
     public void forInit() throws IOException {
         if (cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("--")
-                || cnt.symbol.equals("++") || cnt.symbol.equals("new") || cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || cnt.symbol.equals("++") || cnt.symbol.equals("new") || cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             statementExpressionList();
         } else if (cnt.symbol.equals("boolean") || cnt.symbol.equals("float") || cnt.symbol.equals("double")
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char") || cnt.symbol.equals("_")
-                || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals("[")) {
+                
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals("[")) {
             localVariableDeclaration();
         }
     }
 
     public void forUpdate() throws IOException {
         if (cnt.symbol.equals("super") || cnt.symbol.equals("this") || cnt.symbol.equals("--")
-                || cnt.symbol.equals("++") || cnt.symbol.equals("new") || cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                || cnt.symbol.equals("++") || cnt.symbol.equals("new") || cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             statementExpressionList();
         }
     }
@@ -1272,8 +1296,8 @@ public class ProgramDeclaration {
     }
 
     public void breakContinueIdentifier() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
         }
     }
@@ -1497,15 +1521,15 @@ public class ProgramDeclaration {
                 || cnt.symbol.equals("byte") || cnt.symbol.equals("short") || cnt.symbol.equals("int")
                 || cnt.symbol.equals("long") || cnt.symbol.equals("char")) {
             primitiveType();
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        } else if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
         }
     }
 
     public void unaryExpression() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             expressionName();
             postExpressionName();
         } else if (cnt.symbol.equals("--") || cnt.symbol.equals("++")) {
@@ -1596,8 +1620,8 @@ public class ProgramDeclaration {
             primitiveType();
             dimExpressions();
             dims();
-        } else if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        } else if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
             creationExpression();
         }
@@ -1618,8 +1642,8 @@ public class ProgramDeclaration {
     }
 
     public void argumentList() throws IOException {
-        if (cnt.symbol.equals("_") || ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) || cnt.symbol.equals("--")
+        if (cnt.symbol.equals("_") 
+                || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || cnt.symbol.equals("--")
                 || cnt.symbol.equals("++") || cnt.symbol.equals("0") || cnt.symbol.equals("1") || cnt.symbol.equals("2")
                 || cnt.symbol.equals("3") || cnt.symbol.equals("4") || cnt.symbol.equals("5") || cnt.symbol.equals("6")
                 || cnt.symbol.equals("7") || cnt.symbol.equals("8") || cnt.symbol.equals("9") || cnt.symbol.equals("true")
@@ -1732,18 +1756,13 @@ public class ProgramDeclaration {
     }
 
     public void identifier() throws IOException {
-        if (((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+        if ((cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             alphabet();
-            while (((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                    || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)
-                    || ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)
-                    || cnt.symbol.equals("_")) {
-                while (((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)) {
+            while ((cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || (cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)) || cnt.symbol.equals("_")) {
+                while ((cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57))) {
                     digit();
                 }
-                while (((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                        || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                while ((cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
                     alphabet();
                 }
                 while (cnt.symbol.equals("_")) {
@@ -1752,15 +1771,11 @@ public class ProgramDeclaration {
             }
         } else if (cnt.symbol.equals("_")) {
             this.cnt.accept("_");
-            while (((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                    || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)
-                    || ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)
-                    || cnt.symbol.equals("_")) {
-                while (((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)) {
+            while ((cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122)) || (cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57)) || cnt.symbol.equals("_")) {
+                while ((cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57))) {
                     digit();
                 }
-                while (((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90)
-                        || ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122)) {
+                while ((cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
                     alphabet();
                 }
                 while (cnt.symbol.equals("_")) {
@@ -1842,7 +1857,7 @@ public class ProgramDeclaration {
     public void digit() throws IOException {
         if (cnt.symbol.equals("0")) {
             this.cnt.accept("0");
-        } else if ((int) cnt.symbol.charAt(0) >= 49 && (int) cnt.symbol.charAt(0) <= 57) {
+        } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 49 && (int) cnt.symbol.charAt(0) <= 57) {
             nonZeroDigit();
         }
     }
@@ -2075,9 +2090,9 @@ public class ProgramDeclaration {
     }
 
     public void characterLiteralOption() throws IOException {
-        if ((int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
             singleCharacter();
-        } else if ((int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
+        } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             singleCharacter();
         } else if (cnt.symbol.equals("\\t") || cnt.symbol.equals("\\b") || cnt.symbol.equals("\\n")
                 || cnt.symbol.equals("\\r") || cnt.symbol.equals("\\f") || cnt.symbol.equals("\\\'")
@@ -2087,9 +2102,9 @@ public class ProgramDeclaration {
     }
 
     public void singleCharacter() throws IOException {
-        if ((int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
             inputCharacter();
-        } else if ((int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
+        } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             inputCharacter();
         } else if (cnt.symbol.equals("\"")) {
             this.cnt.accept("\"");
@@ -2098,8 +2113,8 @@ public class ProgramDeclaration {
 
     public void stringLiteral() throws IOException {
         this.cnt.accept("\"");
-        while ((int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91
-                || (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126
+        while (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91
+                || cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126
                 || cnt.symbol.equals("\'") || cnt.symbol.equals("\\t") || cnt.symbol.equals("\\b")
                 || cnt.symbol.equals("\\n") || cnt.symbol.equals("\\r") || cnt.symbol.equals("\\f")
                 || cnt.symbol.equals("\\\'") || cnt.symbol.equals("\\\"") || cnt.symbol.equals("\\\\")) {
@@ -2270,9 +2285,9 @@ public class ProgramDeclaration {
     }
 
     public void stringCharacter() throws IOException {
-        if ((int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
             inputCharacter();
-        } else if ((int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
+        } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             inputCharacter();
         } else if (cnt.symbol.equals("\'")) {
             this.cnt.accept("\'");
@@ -2284,11 +2299,9 @@ public class ProgramDeclaration {
     }
 
     public void inputCharacter() throws IOException {
-        if ((int) cnt.symbol.charAt(0) >= 65 && (int) cnt.symbol.charAt(0) <= 90) {
+        if ((cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             alphabet();
-        } else if ((int) cnt.symbol.charAt(0) >= 97 && (int) cnt.symbol.charAt(0) <= 122) {
-            alphabet();
-        } else if ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57) {
+        } else if ((cnt.symbol.length() == 1 && ((int) cnt.symbol.charAt(0) >= 48 && (int) cnt.symbol.charAt(0) <= 57))) {
             digit();
         } else if (cnt.symbol.equals("!")) {
             this.cnt.accept("!");
@@ -2352,9 +2365,9 @@ public class ProgramDeclaration {
     }
 
     public void allInputCharacter() throws IOException {
-        if ((int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
+        if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 33 && (int) cnt.symbol.charAt(0) <= 91) {
             inputCharacter();
-        } else if ((int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
+        } else if (cnt.symbol.length() == 1 && (int) cnt.symbol.charAt(0) >= 93 && (int) cnt.symbol.charAt(0) <= 126) {
             inputCharacter();
         } else if (cnt.symbol.equals("\"")) {
             this.cnt.accept("\"");

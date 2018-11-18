@@ -1,0 +1,2 @@
+packageModel;importController.Controller;importjava.io.IOException;publicabstractclassAnimal{publicintage,weight;publicfinalstaticintMOUTH=1;publicAnimal(intage,intweight){age+=5;this.age=age;this.weight=weight;}publicinthello(intage,intweight){age+=5;age++;--weight;this.age=age;this.weight=weight;}}
+Tidak ada error
