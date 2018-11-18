@@ -1,10 +1,12 @@
 public class Tester{
 public static void main(String[]args)throws IOException{
 Controllerct=new Controller("input1.txt","output1.txt");
-ct.start(Error)((Error));
+ct.start();
 ct=new Controller("input2.txt","output2.txt");
-ct.start(Error)((Error));
+ct.start();
 ct=new Controller("input3.txt","output3.txt");
-ct.start(Error)((Error));
+ct.start();
 }
 }
+
+Tidak ada error

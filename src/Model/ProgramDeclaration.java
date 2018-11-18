@@ -14,41 +14,6 @@ public class ProgramDeclaration {
         this.cnt = cont;
     }
 
-    public void procedureA() throws IOException {
-        procedureB();
-        this.cnt.accept(".");
-    }
-
-    public void procedureB() throws IOException {
-        switch (cnt.symbol) {
-            case ("x"):
-                this.cnt.accept("x");
-                break;
-            case "(":
-                this.cnt.accept("(");
-                procedureC();
-                this.cnt.accept(")");
-                break;
-            case "[":
-                this.cnt.accept("[");
-                procedureB();
-                this.cnt.accept("]");
-                break;
-        }
-    }
-
-    public void procedureC() throws IOException {
-        procedureB();
-        procedureD();
-    }
-
-    public void procedureD() throws IOException {
-        while (cnt.symbol.equals("+")) {
-            cnt.accept("+");
-            procedureB();
-        }
-    }
-
     //Program Declaration
     public void compilationUnit() throws IOException {
         if(cnt.symbol.equals("package")){
@@ -963,6 +928,10 @@ public class ProgramDeclaration {
         } else if (cnt.symbol.equals("_") 
                 || (cnt.symbol.length() == 1 && ((int) cnt.symbol.toLowerCase().charAt(0) >= 97 && (int) cnt.symbol.toLowerCase().charAt(0) <= 122))) {
             identifier();
+            while(cnt.symbol.equals(".")){
+                this.cnt.accept(".");
+                identifier();
+            }
             blockStatementOption();
         } else if (cnt.symbol.equals("{") || cnt.symbol.equals(";")
                 || cnt.symbol.equals("switch") || cnt.symbol.equals("do") || cnt.symbol.equals("break")

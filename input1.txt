@@ -15,14 +15,4 @@ public abstract class Animal {
 	int a= "b".length();
 	String hallo = new String();
 	hello = new String();
-    }
-
-public int hello(int age, int weight){
-	int[] z = {1,2,3,4};
-	age += 5;
-	age++;
-	--weight;
-    this.age = age;
-	this.weight = weight;
-    }
 }
