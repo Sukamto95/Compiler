@@ -34,7 +34,7 @@ public class Controller {
 
     private void initList() throws FileNotFoundException, IOException {
         //simpan isi file reservedWord ke list
-        br = new BufferedReader(new FileReader("reservedWord.txt"));
+        br = new BufferedReader(new FileReader("symbols/reservedWord.txt"));
         listReservedWord = new ArrayList<>();
         String currentLine;
         while ((currentLine = br.readLine()) != null) {
@@ -42,21 +42,21 @@ public class Controller {
         }
 
         //simpan isi file alphanumeric ke list
-        br = new BufferedReader(new FileReader("alphanumeric.txt"));
+        br = new BufferedReader(new FileReader("symbols/alphanumeric.txt"));
         listAlphanumeric = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
             listAlphanumeric.add(currentLine);
         }
 
         //simpan isi file singleCharacters ke list
-        br = new BufferedReader(new FileReader("singleCharacters.txt"));
+        br = new BufferedReader(new FileReader("symbols/singleCharacters.txt"));
         listSingleCharacters = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
             listSingleCharacters.add(currentLine);
         }
 
         //simpan isi file multiCharacters ke list
-        br = new BufferedReader(new FileReader("multiCharacters.txt"));
+        br = new BufferedReader(new FileReader("symbols/multiCharacters.txt"));
         listMultiCharacters = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
             listMultiCharacters.add(currentLine);

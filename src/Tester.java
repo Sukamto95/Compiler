@@ -7,11 +7,11 @@ import java.io.IOException;
  */
 public class Tester {
     public static void main(String[] args) throws IOException {
-        Controller ct = new Controller("input1.txt","output1.txt");
+        Controller ct = new Controller("input/input1.txt","output/output1.txt");
         ct.start();
-        ct = new Controller("input2.txt","output2.txt");
+        ct = new Controller("input/input2.txt","output/output2.txt");
         ct.start();
-        ct = new Controller("input3.txt","output3.txt");
+        ct = new Controller("input/input3.txt","output/output3.txt");
         ct.start();
     }
 }

@@ -8,10 +8,15 @@ public final static int MOUTH=1;
 public Animal(int age,int weight){
 this.age=age;
 this.weight=weight;
-age+= 5;
-int a="b".length();
+age=(int )5;
+int a="b\n ".length();
 Stringhallo=new String();
 hello=new String();
+}
+public int test(){
+int a=2;
+int b=a+1;
+}
 }
 
 Tidak ada error

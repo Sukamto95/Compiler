@@ -11,8 +11,14 @@ public abstract class Animal {
     public Animal(int age, int weight){
     this.age = age;
 	this.weight = weight;
-	age += 5;
-	int a= "b".length();
+	age = (int)5;
+	int a= "b\n".length();
 	String hallo = new String();
 	hello = new String();
+	}
+	
+	public int test(){
+		int a = 2;
+		int b = a + 1;
+	}
 }
